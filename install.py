@@ -2,26 +2,27 @@ import configparser
 import os
 import sys
 
-#print(sys.argv[1])
+ver = (sys.argv[1])
+#ver = "15"
 
-#ADD VERSION CHECKING!!!!
-ver = (os.popen("php /home/vm164/bundleListener/rabbitMQClient.php bundleRequest").read())
-ver = ver.strip()
+bundleName = (sys.argv[2])
 
-os.system("tar -xzvf /home/vm164/temp/APIv" + ver + ".tgz -C /home/vm164/temp/")
+print ("\r\n")
+print (bundleName)
+print ("\r\n")
+
+os.system("tar -xzvf /home/vm1/temp/FE_"+ bundleName + "_v" + ver + ".tgz -C /home/vm1/temp/")
 
 conf = configparser.ConfigParser()
-conf.read("/home/vm164/temp/bundleConfig.cfg")
+conf.read("/home/vm1/temp/bundle.ini")
 
-temp = conf.get("apiBundleConfig", "tempLocation")
-apiLocation = conf.get("apiBundleConfig", "apiCode")
-logLocation = conf.get("apiBundleConfig", "logCode")
+dest = conf.get("destinations", str(bundleName))
 
-os.system("mv " + temp + "/apiServer.php " + " " + apiLocation)
-os.system("mv " + temp + "/logRabbitMQ.ini " + " " + logLocation)
+#os.system("rm -rf /home/vm1/temp/rabbitmqphp_example/.git")
+os.system("cp " + temp + " API_apiServer_v" + ver + " " + dest)
 
-os.system("rm -r /home/vm164/temp/APIv" + ver + ".tgz")
-os.system("rm -r /home/vm164/temp/bundleConfig.cfg")
+os.system("rm -r /home/vm164/temp/API_apiServer_v" + ver + ".tgz")
+os.system("rm -r /home/vm164/temp/bundle.ini")
 
 os.system("echo")
 os.system("echo Operation completed successfully.")
