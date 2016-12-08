@@ -8,7 +8,7 @@ require_once('rabbitMQLib.inc');
 function deploy($request)
 {
   //echo($request["message"]);
-  echo("THIS ECHO IS ONLY FOR TESTING");
+  //echo("THIS ECHO IS ONLY FOR TESTING");
   //shell_exec("python3 install.py ". $request["version"].$request["BUNDLENAME"]); 
 
 $deployPath = '/home/vm1/temp/';
@@ -25,20 +25,19 @@ $deployPath = '/home/vm1/temp/';
   $dstPath =  $ini[$request['bundleFolder']];
 
   //delete tmp folder
-  shell_exec('rm -rf ' . $deployPath . 'tmp/' );
+//  shell_exec('rm -rf ' . $deployPath . 'tmp/' );
 
   //copy tar to correct path - 1 directory
- // $rtPath = str_replace(PHP_EOL, '',  shell_exec('dirname '. $dstPath));
-  $rtPath = $dstPath;
- // shell_exec('rm -rf ' . $rtPath)
-  shell_exec('cp ' . $deployPath . $request['bundleTar'] . ' ' . $rtPath);
- // echo ('cp ' . $deployPath . $request['bundleTar'] . ' ' . $rtPath);
-  // echo '***'. $rtPath . '***';
+  $rtPath = str_replace(PHP_EOL, '',  shell_exec('dirname '. $dstPath));
+ // $rtPath = $dstPath;
 
+ // shell_exec('rm -rf ' . $dstPath);
+  shell_exec('cp ' . $deployPath . $request['bundleTar'] . ' ' . $rtPath);
+	//echo 'cp ' . $deployPath . $request['bundleTar'] . ' ' . $rtPath;
 
   shell_exec( 'tar -xvf '. $rtPath . '/' . $request['bundleTar']. ' -C ' . $rtPath );
 //echo 'tar -xvf '. $rtPath . '/' . $request['bundleTar']. ' -C ' . $rtPath;  
- shell_exec('rm ' . $rtPath . '/'. $request['bundleTar'] );
+  shell_exec('rm ' . $rtPath . '/'. $request['bundleTar'] );
 
 	
 }
